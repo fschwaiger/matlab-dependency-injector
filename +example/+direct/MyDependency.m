@@ -1,0 +1,3 @@
+classdef MyDependency < handle
+end
+
