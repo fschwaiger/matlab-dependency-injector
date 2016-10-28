@@ -1,7 +1,7 @@
 classdef MyClass < handle
     
     properties
-        MyDependency % 1x1 example.basic.MyDependency
+        MyDependency % 1x1 basic.MyDependency
         MyConfigArray % 1x3 double
     end
     

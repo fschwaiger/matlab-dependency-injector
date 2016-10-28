@@ -10,10 +10,12 @@
 % production code, making it as much reusable as possible. The only
 % references to Injector can be found within the InjectorConfig files.
 
-myClass = Injector().get(?example.provider.MyClass);
+myClass = Injector().get(?provider.MyClass);
 myClass.addData('hello');
 myClass.addData('world');
 
-assert(isa([myClass.Data{:}], 'example.provider.Data'));
+assert(isa([myClass.Data{:}], 'provider.Data'));
 assert(strcmp(myClass.Data{1}.String, 'hello'));
 assert(strcmp(myClass.Data{2}.String, 'world'));
+
+clear myClass

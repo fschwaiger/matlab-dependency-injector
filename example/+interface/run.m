@@ -3,7 +3,7 @@
 %
 % See also example.interface.InjectorConfig
 
-myClass = Injector().get(?example.interface.MyInterface);
-assert(isa(myClass, 'example.interface.MyInterface'));
+myClass = Injector().get(?interface.MyInterface);
+assert(isa(myClass, 'interface.MyInterface'));
 
 clear myClass

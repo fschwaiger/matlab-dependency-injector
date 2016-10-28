@@ -2,8 +2,8 @@
 % constructor parameter name), they will receive the same handle.
 
 injector = Injector();
-myFirstInstance = injector.get(?example.singleton.MyFirstClass);
-myOtherInstance = injector.get(?example.singleton.MyOtherClass);
+myFirstInstance = injector.get(?singleton.MyFirstClass);
+myOtherInstance = injector.get(?singleton.MyOtherClass);
 
 assert(myFirstInstance.MyFirstDependency == myOtherInstance.MyOtherDependency);
 

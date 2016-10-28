@@ -2,15 +2,15 @@ injector = Injector();
 
 %% if no 'fileName' is specified, cannot create a Loader
 try
-    injector.get(?example.cascade.Loader);
+    injector.get(?cascade.Loader);
 catch exception
     assert(strcmp(exception.message, ...
-        'Cannot inject ''fileName'' in scope ''example.cascade''.'));
+        'Cannot inject ''fileName'' in scope ''cascade''.'));
 end
 
 %% only with 'fileName' provided, will create the appropriate instance
 fileName = 'myvalues.txt';
-loader = injector.with(fileName).get(?example.cascade.Loader);
-assert(isa(loader.FileReader, 'example.cascade.TxtFileReader'));
+loader = injector.with(fileName).get(?cascade.Loader);
+assert(isa(loader.FileReader, 'cascade.TxtFileReader'));
 
 clear injector fileName loader exception

@@ -1,8 +1,8 @@
-classdef TxtFileReader < example.cascade.FileReader
+classdef TxtFileReader < cascade.FileReader
     
     methods
         function self = TxtFileReader(fileName)
-            self@example.cascade.FileReader(fileName);
+            self@cascade.FileReader(fileName);
         end
         
         function contents = read(self)

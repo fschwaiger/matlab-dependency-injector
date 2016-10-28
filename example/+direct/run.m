@@ -2,8 +2,8 @@
 % name to avoid creating an InjectorConfig file.
 
 injector = Injector();
-myFirstInstance = injector.get(?example.direct.MyClass);
-myOtherInstance = injector.get(?example.direct.MyClass);
+myFirstInstance = injector.get(?direct.MyClass);
+myOtherInstance = injector.get(?direct.MyClass);
 
 assert(myFirstInstance ~= myOtherInstance);
 assert(myFirstInstance.MyDependency == myOtherInstance.MyDependency);

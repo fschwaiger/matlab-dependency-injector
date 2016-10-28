@@ -1,7 +1,7 @@
 classdef (Abstract, Hidden) InjectorConfig
     
     properties (Constant)
-        myDependency = 'example.basic.MyDependency'
+        myDependency = 'basic.MyDependency'
     end
 end
 

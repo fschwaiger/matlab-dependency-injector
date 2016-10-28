@@ -331,14 +331,14 @@ end
 
 function [scope, name] = splitPath(path)
     % Splits 'scope.test.class' into 'scope.test' and 'class'
-    for dot = length(path) : -1 : 1
-        if path(dot) == '.'
-            break
-        end
+    dot = find(path == '.', 1, 'last');
+    if isempty(dot)
+        scope = '';
+        name = path;
+    else
+        scope = path(1:dot-1);
+        name = path(1+dot:end);
     end
-
-    scope = path(1:dot-1);
-    name = path(1+dot:end);
 end
 
 function path = joinPath(scope, name)

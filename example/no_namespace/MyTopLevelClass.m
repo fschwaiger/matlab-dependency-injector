@@ -1,0 +1,4 @@
+classdef MyTopLevelClass < handle
+    
+end
+

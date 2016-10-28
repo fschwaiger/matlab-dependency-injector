@@ -1,7 +1,7 @@
 classdef MyClass < handle
     
     properties
-        DataProvider % 1x1 example.provider.Data
+        DataProvider % 1x1 provider.Data
         Data = {}
     end
     

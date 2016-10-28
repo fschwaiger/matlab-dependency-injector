@@ -1,7 +1,7 @@
 classdef MyOtherClass < handle
     
     properties
-        MyOtherDependency % 1x1 example.basic.MyDependency
+        MyOtherDependency % 1x1 basic.MyDependency
     end
     
     methods
