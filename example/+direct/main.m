@@ -1,5 +1,5 @@
 % You can name the constructor parameter identical to the dependency class
-% name to avoid creating an InjectorConfig file.
+% name to avoid creating an Package file.
 
 injector = Injector();
 myFirstInstance = injector.get(?direct.MyClass);

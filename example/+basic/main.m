@@ -1,4 +1,4 @@
-% Dependencies are automatically resolved using the provided InjectorConfig
+% Dependencies are automatically resolved using the provided Package
 % class. As shown in this folder, that class should be abstract and hidden,
 % its properties constant and methods static.
 

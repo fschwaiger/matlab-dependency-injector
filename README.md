@@ -7,7 +7,7 @@ TL;DR: Automated dependency injector class for Matlab. Works by inspecting const
 
 Copy the file '__Injector.m__' to your project directory. The license is already included.
 
-The +example and +test directories are optional, you will not need them for production.
+The `example` and `test` directories are optional, you will not need them for production.
 
 
 ## Why do I need this?
@@ -71,11 +71,11 @@ end
 
 ## Automating the Boring Stuff
 
-The `Injector` class expects that if you are consistently naming your dependencies in your class constructors, it will find the values by looking up their names in the configuration file `InjectorConfig.m`. That is, you no longer write functions for each class, but only the minimal required configuration in each package:
+The `Injector` class expects that if you are consistently naming your dependencies in your class constructors, it will find the values by looking up their names in the configuration file `Package.m`. That is, you no longer write functions for each class, but only the minimal required configuration in each package:
 
 ```Matlab
-% file '+my/+package/InjectorConfig.m'
-classdef (Abstract, Hidden) InjectorConfig
+% file '+my/+package/Package.m'
+classdef (Abstract, Hidden) Package
 
     properties (Constant)
         reader = 'TxtFileReader' % you can omit the current package path
@@ -109,7 +109,7 @@ injector = Injector();
 instance  = injector.get(?example.basic.MyClass);
 ```
 
-You can even create instances from interfaces, if you configured it to be resolved as a concrete implementation in your `InjectorConfig` file:
+You can even create instances from interfaces, if you configured it to be resolved as a concrete implementation in your `Package` file:
 
 ```Matlab
 injector = Injector();
@@ -137,13 +137,13 @@ loader = Injector().with('fileName', someOtherVarname).get('example.cascade', 'L
 ```
 
 
-## Syntax of InjectorConfig
+## Syntax of Package
 
-The `InjectorConfig.m` file is a static class that can be placed in every directory to map the dependencies of the classes therein. For static invokation of properties and methods, the syntax shall be like the following (pro tip: use this as a template):
+The `Package.m` file is a static class that can be placed in every directory to map the dependencies of the classes therein. For static invokation of properties and methods, the syntax shall be like the following (pro tip: use this as a template):
 
 ```Matlab
-classdef (Abstract, Hidden) InjectorConfig
-    % INJECTORCONFIG - Maps package dependencies.
+classdef (Abstract, Hidden) Package
+    % PACKAGE - Maps package dependencies.
 
     properties (Constant)
         % Put dependencies resolved by named reference here.
@@ -151,10 +151,10 @@ classdef (Abstract, Hidden) InjectorConfig
         dependencyA = 'MyInterface'
         dependencyB = 'myFunctionInThisFile'
         dependencyC = 'other.package.ClassName'
-        dependencyD = 'other.package.functionInInjectorConfigThere'
+        dependencyD = 'other.package.functionInPackageThere'
         MyInterface = 'MyConcreteClass'
     end
-    
+
     methods (Static)
         % Put dependencies resolved by function calls here.
         % Besides your own parameters, the parameters 'scope', 'folder' or

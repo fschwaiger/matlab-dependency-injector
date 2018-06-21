@@ -17,10 +17,10 @@ classdef Injector < handle
     % To resolve class dependencies, the INJECTOR analyses the class'
     % definitions and notes all constructor input names. It then looks up
     % its internal cache of already resolved objects. If not present, the
-    % corresponding static InjectorConfig class is consulted to map the
+    % corresponding static Package class is consulted to map the
     % unknown dependencies to either classes or injector methods.
     %
-    % Every package needs an InjectorConfig class. The unknown dependencies
+    % Every package needs an Package class. The unknown dependencies
     % are there looked up by name, first evaluating constant properties of
     % the required name, then static injector methods and class names.
     %
@@ -32,26 +32,26 @@ classdef Injector < handle
     %        myObject = injector.get(?example.basic.MyClass)
     %   3) The INJECTOR inspects the constructor and finds
     %      'myDependency' and 'myConfigArray' - values yet unresolved.
-    %   4) The INJECTOR opens the example.basic.InjectorConfig class,
+    %   4) The INJECTOR opens the example.basic.Package class,
     %      searching its constant properties for the two dependency names.
     %   5) The INJECTOR finds 'myDependency' to be a redirect to
     %      'example.basic.MyDependency'.
     %   6) The INJECTOR changes scope to the example.basic package, looking
-    %      up the example.basic.InjectorConfig, finding no more reference.
+    %      up the example.basic.Package, finding no more reference.
     %   7) The INJECTOR finds the example.basic.MyDependency class and
     %      instantiates it, as it has 0 dependencies.
-    %   8) The INJECTOR escapes to its last scope (also 'example.basic'), 
-    %      looking up the example.basic.InjectorConfig class for 
+    %   8) The INJECTOR escapes to its last scope (also 'example.basic'),
+    %      looking up the example.basic.Package class for
     %      'myConfigArray'.
     %   9) The INJECTOR resolves 'myConfigArray' to the
-    %      example.basic.InjectorConfig.myConfigArray() method.
+    %      example.basic.Package.myConfigArray() method.
     %  11) Using the return value from myConfigArray(), the CodeWorkflow
     %      handle can finally be instantiated.
     %
     % You can inject handles by specifying either their class names or
     % meta.classes. It is also possible to inject various other types, as
-    % returned by their corresponding InjectorConfig methods. Parameters to
-    % these InjectorConfig methods are also recursively resolved.
+    % returned by their corresponding Package methods. Parameters to
+    % these Package methods are also recursively resolved.
     %
     % To speed up resolving, already resolved dependencies are stored in a
     % containers.Map cache for fast lookup.
@@ -155,7 +155,7 @@ classdef Injector < handle
                 value = self;
             elseif strcmp(name, 'folder')
                 % absolute path to current package folder
-                value = fileparts(which(joinPath(scope, 'InjectorConfig')));
+                value = fileparts(which(joinPath(scope, 'Package')));
             elseif isKey(self.Resolved, name)
                 % resolved value from cache
                 value = self.Resolved(name);
@@ -237,7 +237,7 @@ function methodInfo = resolveInjectorMethod(scope, name, path)
     %
     % Inputs:
     %   scope  -  Package where name will be resolved.
-    %   name   -  Name of class or InjectorConfig function within scope.
+    %   name   -  Name of class or Package function within scope.
     %   path   -  Combined scope and name. See joinPath(scope, name).
     %
     % Returns a scalar struct with the fields:
@@ -247,7 +247,7 @@ function methodInfo = resolveInjectorMethod(scope, name, path)
     %                  function handle parameters for quick access.
     %   Scope       -  String referring to the package scope of the method.
     %
-    % See also resolveInjectorConfigMethod, resolveClassContructorMethod
+    % See also resolvePackageMethod, resolveClassContructorMethod
 
     % internal cache for resolved function handles
     persistent methodCache
@@ -259,7 +259,7 @@ function methodInfo = resolveInjectorMethod(scope, name, path)
         methodInfo = methodCache(path);
     else
         try
-            methodInfo = resolveInjectorConfigMethod(scope, name);
+            methodInfo = resolvePackageMethod(scope, name);
         catch
             methodInfo = resolveClassContructorMethod(scope, name, path);
         end
@@ -269,11 +269,11 @@ function methodInfo = resolveInjectorMethod(scope, name, path)
     end
 end
 
-function methodInfo = resolveInjectorConfigMethod(scope, name)
-    % Resolves the scope.InjectorConfig.name property or function.
+function methodInfo = resolvePackageMethod(scope, name)
+    % Resolves the scope.Package.name property or function.
     %
     % See also resolveInjectorMethod
-    configPath = joinPath(scope, 'InjectorConfig');
+    configPath = joinPath(scope, 'Package');
     configClass = meta.class.fromName(configPath);
 
     configProperty = findobj(configClass.PropertyList, 'Name', name);

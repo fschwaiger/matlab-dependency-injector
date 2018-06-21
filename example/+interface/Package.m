@@ -1,5 +1,5 @@
-classdef (Abstract, Hidden) InjectorConfig
-    
+classdef (Abstract, Hidden) Package
+
     properties (Constant)
         MyInterface = 'MyClass'
     end
